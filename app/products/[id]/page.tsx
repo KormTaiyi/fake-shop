@@ -27,6 +27,8 @@ export default async function ProductDetailPage({
             alt={product.title}
             fill
             sizes="(max-width: 768px) 100vw, 50vw"
+            loading="eager"
+            fetchPriority="high"
             className="object-contain p-8"
           />
         </div>

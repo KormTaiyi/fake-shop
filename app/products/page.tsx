@@ -134,7 +134,7 @@ export default async function ProductsPage({ searchParams }: ProductsPageProps) 
               </Card>
             ) : (
               <div className="grid gap-5 sm:grid-cols-2 xl:grid-cols-3">
-                {visibleProducts.map((product) => (
+                {visibleProducts.map((product, index) => (
                   <Card key={product.id} className="p-4">
                     <div className="relative h-52 rounded-xl bg-slate-100">
                       <Image
@@ -142,6 +142,8 @@ export default async function ProductsPage({ searchParams }: ProductsPageProps) 
                         alt={product.title}
                         fill
                         sizes="(max-width: 640px) 100vw, (max-width: 1280px) 50vw, 33vw"
+                        loading={index < 3 ? "eager" : "lazy"}
+                        fetchPriority={index < 3 ? "high" : "auto"}
                         className="object-contain p-5"
                       />
                     </div>

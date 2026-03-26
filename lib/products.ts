@@ -12,6 +12,7 @@ export type Product = {
 };
 
 const API_URL = "https://fakestoreapi.com/products";
+const PRODUCTS_REVALIDATE_SECONDS = 60 * 15;
 const REQUEST_HEADERS: HeadersInit = {
   Accept: "application/json",
   "User-Agent":
@@ -65,11 +66,15 @@ function toProduct(value: unknown): Product | null {
   };
 }
 
-async function fetchJson<T>(url: string): Promise<T | null> {
+async function fetchJson<T>(url: string, tags: string[]): Promise<T | null> {
   try {
     const res = await fetch(url, {
-      cache: "no-store",
+      cache: "force-cache",
       headers: REQUEST_HEADERS,
+      next: {
+        revalidate: PRODUCTS_REVALIDATE_SECONDS,
+        tags,
+      },
       signal: AbortSignal.timeout(REQUEST_TIMEOUT_MS),
     });
     if (!res.ok) {
@@ -93,7 +98,7 @@ async function fetchJson<T>(url: string): Promise<T | null> {
 }
 
 export async function getProducts(): Promise<Product[]> {
-  const payload = await fetchJson<unknown>(API_URL);
+  const payload = await fetchJson<unknown>(API_URL, ["products"]);
   if (!Array.isArray(payload)) {
     return [];
   }
@@ -110,6 +115,9 @@ export async function getProductById(id: string): Promise<Product | null> {
     return null;
   }
 
-  const payload = await fetchJson<unknown>(`${API_URL}/${productId}`);
+  const payload = await fetchJson<unknown>(`${API_URL}/${productId}`, [
+    "products",
+    `product:${productId}`,
+  ]);
   return toProduct(payload);
 }

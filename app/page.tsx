@@ -4,6 +4,8 @@ import { Headset, RotateCcw, ShieldCheck, Truck } from "lucide-react";
 import Card from "@/components/ui/Card";
 import { getProducts } from "@/lib/products";
 
+export const revalidate = 900;
+
 const serviceHighlights = [
   {
     title: "Responsive",
@@ -107,7 +109,7 @@ export default async function HomePage() {
                   alt="Fashion style hero image"
                   width={960}
                   height={700}
-                  priority
+                  preload
                   sizes="(max-width: 1024px) 100vw, 45vw"
                   className="h-auto w-full object-cover transition-transform duration-500 group-hover:scale-[1.02]"
                 />
@@ -161,7 +163,7 @@ export default async function HomePage() {
           </Card>
         ) : (
           <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
-            {featuredProducts.map((product) => (
+            {featuredProducts.map((product, index) => (
               <Card key={product.id} className="p-4">
                 <div className="relative h-44 rounded-xl bg-slate-100">
                   <Image
@@ -169,6 +171,8 @@ export default async function HomePage() {
                     alt={product.title}
                     fill
                     sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
+                    loading={index < 2 ? "eager" : "lazy"}
+                    fetchPriority={index < 2 ? "high" : "auto"}
                     className="object-contain p-4"
                   />
                 </div>
