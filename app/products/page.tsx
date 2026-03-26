@@ -59,7 +59,7 @@ export default async function ProductsPage({ searchParams }: ProductsPageProps) 
       <header>
         <h1 className="text-3xl font-bold tracking-tight">All Products</h1>
         <p className="mt-2 text-slate-600">
-          Catalog data from `fakestoreapi.com` with offline fallback.
+          Catalog data from `fakestoreapi.com`.
         </p>
       </header>
 
