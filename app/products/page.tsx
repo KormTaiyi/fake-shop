@@ -58,7 +58,9 @@ export default async function ProductsPage({ searchParams }: ProductsPageProps) 
     <div className="space-y-8">
       <header>
         <h1 className="text-3xl font-bold tracking-tight">All Products</h1>
-        <p className="mt-2 text-slate-600">Live data from `fakestoreapi.com`.</p>
+        <p className="mt-2 text-slate-600">
+          Catalog data from `fakestoreapi.com` with offline fallback.
+        </p>
       </header>
 
       {products.length === 0 ? (

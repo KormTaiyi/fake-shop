@@ -53,7 +53,6 @@ export default async function ProductDetailPage({
               Back to products
             </Link>
           </div>
-          j
         </div>
       </div>
     </Card>
